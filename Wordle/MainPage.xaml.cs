@@ -1,25 +1,24 @@
-﻿namespace Wordle
+﻿using Microsoft.Maui.Controls;
+
+namespace Wordle
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
         public MainPage()
         {
             InitializeComponent();
+
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        private void OnLetterClicked(object sender, EventArgs e)
         {
-            count++;
+            //This I will handle the click event of the letter buttons
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+        }
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        private void OnEnterClicked(object sender, EventArgs e)
+        {
+            //Checks Guesses, and updates the boxes with colour
         }
     }
-
 }
