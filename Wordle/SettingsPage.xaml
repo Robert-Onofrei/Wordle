@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Wordle.SettingsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Settings">
+
+    <VerticalStackLayout Padding="20" Spacing="15" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+        <Label 
+            Text="SETTINGS"
+            FontSize="Title"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            FontAttributes="Bold" />
+
+        <!--Color Palette-->
+        <Picker
+            x:Name="ColorPalettePicker"
+            Title="Colour Palette">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Default</x:String>
+                    <x:String>Pastel</x:String>
+                    <x:String>Warm</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+        <!--On Screen Keyboard-->
+        <HorizontalStackLayout>
+            <Label 
+                Text="On-Screen Keyboard"
+                VerticalOptions="Center"/>
+            <Switch 
+                x:Name="OnScreenKeyboardSwitch"/>
+        </HorizontalStackLayout>
+
+        <!--Hard Mode toggle-->
+        <HorizontalStackLayout>
+            <Label 
+                Text="Hard Mode"
+                VerticalOptions="Center"/>
+            <Switch 
+                x:Name="HardModeSwitch"/>
+        </HorizontalStackLayout>
+
+        <!--Font Size-->
+        <Label 
+            Text="Font Size"
+            FontAttributes="Bold"/>
+        <Slider
+            x:Name="FontSizeSlider"/>
+
+        <Button 
+            Text="Back"
+            Clicked="OnBack_Clicked"
+            HorizontalOptions="Center"/>
+    </VerticalStackLayout>
+</ContentPage>

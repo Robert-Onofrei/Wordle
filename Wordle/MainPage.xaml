@@ -17,6 +17,11 @@
             FontAttributes="Bold"
             Margin="0, 20, 0, 20" />
 
+        <Button
+            Text="Open Settings"
+            HorizontalOptions="Center"
+            Clicked="OnOpenSettingsClicked" />
+
         <!--Grid of Letter Boxes-->
         <Grid
             x:Name="WordGrid"

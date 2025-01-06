@@ -80,7 +80,7 @@ namespace Wordle
             ColorBoxes(guess.ToUpperInvariant());
 
             //Check for win
-            if (guess.ToUpperInvariant() == secretWord)
+            if (guess.ToUpper() == secretWord)
             {
                 MessageLabel.Text = $"You guessed it! The word was {secretWord}.";
                 isGameOver = true;
@@ -149,6 +149,12 @@ namespace Wordle
             {
                 letterSpace[currentRow, c].BackgroundColor = colors[c];
             }
+        }
+
+        private async void OnOpenSettingsClicked(object sender, EventArgs e)
+        {
+            //Opens the settings page
+            await Navigation.PushModalAsync(new SettingsPage());
         }
     }
 }

@@ -1,20 +1,30 @@
-﻿<?xml version = "1.0" encoding = "UTF-8" ?>
-<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Wordle"
-             x:Class="Wordle.App">
-    <!--Style for guess words-->
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application
+    x:Class="Wordle.App"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Resources for the entire app -->
     <Application.Resources>
-            <Style x:Key="LetterBoxStyle" TargetType="Label">
-                <Setter Property="WidthRequest" Value="60"/>
-                <Setter Property="HeightRequest" Value="60"/>
-                <Setter Property="BackgroundColor" Value="#121212"/>
-                <Setter Property="HorizontalTextAlignment" Value="Center"/>
-                <Setter Property="VerticalTextAlignment" Value="Center"/>
-                <Setter Property="FontSize" Value="22"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
-                <Setter Property="TextColor" Value="White"/>
-                <Setter Property="Margin" Value="0"/>
-            </Style>
-        </Application.Resources>
-    </Application>
+
+        <!--
+          A style used by each "letter box" (Label) in the grid.
+          - 50x50 size
+          - Dark background (#121212)
+          - White text
+          - Centered text
+          - Bold, size ~19
+        -->
+        <Style x:Key="LetterBoxStyle" TargetType="Label">
+            <Setter Property="WidthRequest" Value="50" />
+            <Setter Property="HeightRequest" Value="50" />
+            <Setter Property="BackgroundColor" Value="#121212" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="19" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+        </Style>
+
+    </Application.Resources>
+</Application>
