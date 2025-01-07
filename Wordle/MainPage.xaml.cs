@@ -6,64 +6,185 @@ namespace Wordle
 {
     public partial class MainPage : ContentPage
     {
-        private Label[,] letterSpace = new Label[6, 5];
-
-        private int currentRow = 0;
-        private int currentCol = 0; 
-        private bool isGameOver = false;
-
-        //Pracitce word for now
+        //Variables
+        private Label[,] letterBoxes = new Label[6, 5];
+        private int curRow = 0;
+        private int curCol = 0;
+        private bool gameOver = false;
+        private bool isHardModeOn = false;
         private string secretWord = "MAUIX";
+
+        //Defines colour palette pairs
+        private Dictionary<string, PaletteColours> palettePairs = new Dictionary<string, PaletteColours>
+        {
+            {
+                //Defualt colour
+                "Default", new PaletteColours
+                {
+                    BackgroundColor = "#121212",
+                    KeyBackgroundColor = "#787C7E",
+                    KeyCorrectColor = "#6AAA64",
+                    KeyAlmostColor = "#C9B458", 
+                    KeyWrongColor = "#3b3b3b"
+                }
+            },
+            {
+                //Pastel colour
+                "Pastel", new PaletteColours
+                {
+                    BackgroundColor = "#F7E1D7",
+                    KeyBackgroundColor = "#C9CBA3",
+                    KeyCorrectColor = "#6AAA64",
+                    KeyAlmostColor = "#C9B458",
+                    KeyWrongColor = "#A3A3A3"
+                }
+            },
+            {
+                //Synth-wave colour
+                "Synth-wave", new PaletteColours
+                {
+                    BackgroundColor = "#1B1B3A",
+                    KeyBackgroundColor = "#6D9DC5",
+                    KeyCorrectColor = "#6AAA64",
+                    KeyAlmostColor = "#C9B458",
+                    KeyWrongColor = "#3b3b3b"
+                }
+            }
+        };
+
+        //Tracks letter that must be in a specific place, eg: Green letters
+        private Dictionary<int, char> letterByPos = new Dictionary<int, char>();
+
+        //Tracks letters that must be in the guess, eg: Yellow letters
+        private HashSet<char> reqLetters = new HashSet<char>();
 
         public MainPage()
         {
             InitializeComponent();
 
-            //This seems very messy, Try to refine
-            letterSpace[0, 0] = R0C0; letterSpace[0, 1] = R0C1; letterSpace[0, 2] = R0C2; letterSpace[0, 3] = R0C3; letterSpace[0, 4] = R0C4;
-            letterSpace[1, 0] = R1C0; letterSpace[1, 1] = R1C1; letterSpace[1, 2] = R1C2; letterSpace[1, 3] = R1C3; letterSpace[1, 4] = R1C4;
-            letterSpace[2, 0] = R2C0; letterSpace[2, 1] = R2C1; letterSpace[2, 2] = R2C2; letterSpace[2, 3] = R2C3; letterSpace[2, 4] = R2C4;
-            letterSpace[3, 0] = R3C0; letterSpace[3, 1] = R3C1; letterSpace[3, 2] = R3C2; letterSpace[3, 3] = R3C3; letterSpace[3, 4] = R3C4;
-            letterSpace[4, 0] = R4C0; letterSpace[4, 1] = R4C1; letterSpace[4, 2] = R4C2; letterSpace[4, 3] = R4C3; letterSpace[4, 4] = R4C4;
-            letterSpace[5, 0] = R5C0; letterSpace[5, 1] = R5C1; letterSpace[5, 2] = R5C2; letterSpace[5, 3] = R5C3; letterSpace[5, 4] = R5C4;
+            //Creates letter box array 
+            for (int row = 0; row < 6; row++)
+                for (int col = 0; col < 5; col++)
+                    letterBoxes[row, col] = (Label)FindByName($"R{row}C{col}");
+
+            //Gets notified when the settings change
+            AppSettings.Instance.PropertyChanged += AppSettingsChanged;
+
+            //Default settings
+            ApplySettings();
         }
 
+        private void AppSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            ApplySettings();
+        }
+
+        private void ApplySettings()
+        {
+            ApplyColorPalette(AppSettings.Instance.ColourPalette);
+            ChangeKeyboardVisiblity(AppSettings.Instance.ScreenKeyboard);
+            SetHardMode(AppSettings.Instance.IsHardModeOn);
+            SetFontSize(AppSettings.Instance.FontSize);
+        }
+
+        private void ApplyColorPalette(string palette)
+        {
+            if (palettePairs.ContainsKey(palette))
+            {
+                var colors = palettePairs[palette];
+                //Update Background Color
+                this.BackgroundColor = Color.FromHex(colors.BackgroundColor);
+
+                //Update BoxBackgroundColour Dynamic Resource
+                Application.Current.Resources["BoxBackgroundColour"] = Color.FromHex(colors.KeyBackgroundColor);
+
+                //Reset letter boxes that haven't been guessed yet
+                for (int row = 0; row < 6; row++)
+                {
+                    for (int col = 0; col < 5; col++)
+                    {
+                        if (string.IsNullOrEmpty(letterBoxes[row, col].Text))
+                        {
+                            //Set to default letter box color
+                            letterBoxes[row, col].BackgroundColor = Color.FromHex(colors.KeyBackgroundColor);
+                        }
+                    }
+                }
+            }
+        }
+
+        //Turns the keyboard on or off 
+        public void ChangeKeyboardVisiblity(bool isVisible)
+        {
+            KeyboardLayout.IsVisible = isVisible;
+        }
+
+        //Sets the hard mode
+        public void SetHardMode(bool hardMode)
+        {
+            isHardModeOn = hardMode;
+        }
+
+        //Sets the font size
+        public void SetFontSize(double fontSize)
+        {
+            foreach (Label label in letterBoxes)
+            {
+                label.FontSize = fontSize;
+            }
+
+            foreach (var child in KeyboardLayout.Children)
+            {
+                if (child is Button button)
+                {
+                    button.FontSize = fontSize;
+                }
+            }
+        }
+
+        //When letter is clicked
         private void OnLetterClicked(object sender, EventArgs e)
         {
-            if (isGameOver) return;
+            if (gameOver) return;
 
-            //Checks if button is doing a button job
             var button = sender as Button;
             if (button == null) return;
 
-            //Only adds letter if space exists in the current row
-            if (currentCol < 5)
+            //Only adds letter if empty
+            if (curCol < 5)
             {
-                letterSpace[currentRow, currentCol].Text = button.Text;
-                currentCol++;
+                letterBoxes[curRow, curCol].Text = button.Text.ToUpper();
+                curCol++;
             }
         }
 
+        //When backspace is clicked
         private void OnBackspaceClicked(object sender, EventArgs e)
         {
-            if (isGameOver) return;
+            if (gameOver) return;
 
             //If there's at least one letter typed in the current row
-            if (currentCol > 0)
+            if (curCol > 0)
             {
-                currentCol--;
-                letterSpace[currentRow, currentCol].Text = "";
+                curCol--;
+                letterBoxes[curRow, curCol].Text = "";
+
+                //Resets the background color if not green or yellow
+                string palette = AppSettings.Instance.ColourPalette;
+                var colors = palettePairs[palette];
+                letterBoxes[curRow, curCol].BackgroundColor = Color.FromHex(colors.KeyBackgroundColor);
             }
         }
 
+        //When enter is clicked
         private void OnEnterClicked(object sender, EventArgs e)
         {
-            if (isGameOver) return;
+            if (gameOver) return;
 
-            //Proceeds if there is at least 5 letters in the current row
-            if (currentCol < 5)
+            //Proceeds if row is full
+            if (curCol != 5)
             {
-                MessageLabel.Text = "Not enough letters!";
+                Message.Text = "Not enough letters!";
                 return;
             }
 
@@ -71,36 +192,70 @@ namespace Wordle
             string guess = "";
             for (int c = 0; c < 5; c++)
             {
-                guess += letterSpace[currentRow, c].Text;
+                guess += letterBoxes[curRow, c].Text;
             }
 
-            //Implement a check if the guess is in a valid word list.
+            //Checks constraints if hard mode is on
+            if (isHardModeOn)
+            {
+                //Checks required letters by position eg: green
+                foreach (var kvp in letterByPos)
+                {
+                    int position = kvp.Key;
+                    char requiredChar = kvp.Value;
+                    if (guess[position] != requiredChar)
+                    {
+                        Message.Text = $"Letter '{requiredChar}' must be in position {position + 1}.";
+                        return;
+                    }
+                }
 
-            //Compare guess to secret word and color the boxes
-            ColorBoxes(guess.ToUpperInvariant());
+                //Checks required letters eg: yellow
+                foreach (char requiredChar in reqLetters)
+                {
+                    if (!guess.Contains(requiredChar.ToString(), StringComparison.OrdinalIgnoreCase))
+                    {
+                        Message.Text = $"Guess must contain the letter '{requiredChar}'.";
+                        return;
+                    }
+                }
+            }
 
-            //Check for win
+            //Compares the guess to the secret word and then colours the boxes
+            ColorBoxes(guess.ToUpper());
+
+            //Checks for win
             if (guess.ToUpper() == secretWord)
             {
-                MessageLabel.Text = $"You guessed it! The word was {secretWord}.";
-                isGameOver = true;
+                Message.Text = $"You guessed it! The word was {secretWord}.";
+                gameOver = true;
+
+                //Prompts to start a new game
+                PromptNewGame();
                 return;
             }
 
-            //Move to next row
-            currentRow++;
-            currentCol = 0;
+            //Moves to next row
+            curRow++;
+            curCol = 0;
 
-            //If guessed 6 times game over
-            if (currentRow == 6)
+            //If guessed 6 times, game over
+            if (curRow == 6)
             {
-                MessageLabel.Text = $"No more tries! The word was {secretWord}.";
-                isGameOver = true;
+                Message.Text = $"No more tries! The word was {secretWord}.";
+                gameOver = true;
+
+                //Prompts to start a new game
+                PromptNewGame();
             }
         }
 
+        //Colours the boxes based on the guess
         private void ColorBoxes(string guess)
-        { 
+        {
+            string palette = AppSettings.Instance.ColourPalette;
+            var colors = palettePairs[palette];
+
             //Builds dictionary of letter counts for the guess word
             Dictionary<char, int> letterCounts = new Dictionary<char, int>();
             foreach (char ch in secretWord)
@@ -110,51 +265,111 @@ namespace Wordle
                 letterCounts[ch]++;
             }
 
-            //If a guess char == secret char in same position, it's green.
-            Color[] colors = new Color[5];
+            //First checks correct letters
             for (int i = 0; i < 5; i++)
             {
                 char guessChar = guess[i];
                 char secretChar = secretWord[i];
                 if (guessChar == secretChar)
                 {
-                    colors[i] = Colors.Green;
+                    letterBoxes[curRow, i].BackgroundColor = Color.FromHex(colors.KeyCorrectColor);
                     letterCounts[guessChar]--;
+
+                    //Updates constraints
+                    if (isHardModeOn)
+                    {
+                        if (!letterByPos.ContainsKey(i))
+                            letterByPos.Add(i, guessChar);
+                    }
                 }
             }
 
-            //For positions not marked green:
-            //If guessChar is in letterCounts > 0, mark yellow & decrement
-            //Other marks gray
+            //Second checks almost correct letters
             for (int i = 0; i < 5; i++)
             {
-                //If green skip
-                if (colors[i] == Colors.Green)
+                //If already coloured correctly skips
+                if (letterBoxes[curRow, i].BackgroundColor.Equals(Color.FromHex(colors.KeyCorrectColor)))
+                {
                     continue;
+                }
 
                 char guessChar = guess[i];
                 if (letterCounts.ContainsKey(guessChar) && letterCounts[guessChar] > 0)
                 {
-                    colors[i] = Color.FromArgb("#C9B458");
+                    letterBoxes[curRow, i].BackgroundColor = Color.FromHex(colors.KeyAlmostColor);
                     letterCounts[guessChar]--;
+
+                    //Updates constraints
+                    if (isHardModeOn)
+                    {
+                        reqLetters.Add(guessChar);
+                    }
                 }
                 else
                 {
-                    colors[i] = Color.FromArgb("#3b3b3b");
+                    letterBoxes[curRow, i].BackgroundColor = Color.FromHex(colors.KeyWrongColor);
                 }
             }
-
-            //Applies the colors to the row
-            for (int c = 0; c < 5; c++)
-            {
-                letterSpace[currentRow, c].BackgroundColor = colors[c];
-            }
         }
 
-        private async void OnOpenSettingsClicked(object sender, EventArgs e)
+        //When settings is clicked opens settings page
+        private async void OpenSettings(object sender, EventArgs e)
         {
-            //Opens the settings page
             await Navigation.PushModalAsync(new SettingsPage());
         }
+
+        //Resets constraints
+        private void ResetConstraints()
+        {
+            letterByPos.Clear();
+            reqLetters.Clear();
+        }
+
+        //Starts a new game
+        private void StartNewGame()
+        {
+            //Resets game state
+            gameOver = false;
+            curRow = 0;
+            curCol = 0;
+            Message.Text = "";
+
+            //Resets constraints
+            ResetConstraints();
+
+            //Clears letter boxes
+            for (int row = 0; row < 6; row++)
+                for (int col = 0; col < 5; col++)
+                {
+                    letterBoxes[row, col].Text = "";
+                    string palette = AppSettings.Instance.ColourPalette;
+                    var colors = palettePairs[palette];
+                    letterBoxes[row, col].BackgroundColor = Color.FromHex(colors.KeyBackgroundColor);
+                }
+        }
+
+        //Prompts to start a new game
+        private async void PromptNewGame()
+        {
+            bool restart = await DisplayAlert("Game Over", "Do you want to play again?", "Yes", "No");
+            if (restart)
+            {
+                StartNewGame();
+            }
+            else
+            {
+                gameOver = true;
+            }
+        }
+    }
+
+    //Helper class that stores palette colours
+    public class PaletteColours
+    {
+        public string BackgroundColor { get; set; }
+        public string KeyBackgroundColor { get; set; }
+        public string KeyCorrectColor { get; set; }
+        public string KeyAlmostColor { get; set; }
+        public string KeyWrongColor { get; set; }
     }
 }

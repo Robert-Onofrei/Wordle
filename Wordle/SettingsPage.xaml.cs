@@ -1,5 +1,6 @@
 using Microsoft.Maui.Controls;
 using System;
+using System.Collections.ObjectModel;
 
 namespace Wordle
 {
@@ -8,9 +9,11 @@ namespace Wordle
         public SettingsPage()
         {
             InitializeComponent();
+            BindingContext = AppSettings.Instance;
         }
 
-        private async void OnBack_Clicked(object sender, EventArgs e)
+        //Returns to the main page when back is clicked
+        private async void OnBackClicked(object sender, EventArgs e)
         {
             await Navigation.PopModalAsync();
         }

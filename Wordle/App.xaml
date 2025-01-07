@@ -4,27 +4,44 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- Resources for the entire app -->
     <Application.Resources>
+        <ResourceDictionary>
+            <!--Dynamic Resource-->
+            <!--Default Background letter box Colour-->
+            <Color x:Key="BoxBackgroundColour">#787C7E</Color>
 
-        <!--
-          A style used by each "letter box" (Label) in the grid.
-          - 50x50 size
-          - Dark background (#121212)
-          - White text
-          - Centered text
-          - Bold, size ~19
-        -->
-        <Style x:Key="LetterBoxStyle" TargetType="Label">
-            <Setter Property="WidthRequest" Value="50" />
-            <Setter Property="HeightRequest" Value="50" />
-            <Setter Property="BackgroundColor" Value="#121212" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="FontSize" Value="19" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="HorizontalTextAlignment" Value="Center" />
-            <Setter Property="VerticalTextAlignment" Value="Center" />
-        </Style>
+            <!--Default Palette-->
+            <Color x:Key="DefaultBackgroundColor">#121212</Color>
+            <Color x:Key="DefaultKeyBackgroundColor">#787C7E</Color>
+            <Color x:Key="DefaultKeyCorrectColor">#6AAA64</Color>
+            <Color x:Key="DefaultKeyAlmostColor">#C9B458</Color>
+            <Color x:Key="DefaultKeyWrongColor">#3b3b3b</Color>
 
+            <!--Pastel Palette-->
+            <Color x:Key="PastelBackgroundColor">#F7E1D7</Color>
+            <Color x:Key="PastelKeyBackgroundColor">#C9CBA3</Color>
+            <Color x:Key="PastelKeyCorrectColor">#6AAA64</Color>
+            <Color x:Key="PastelKeyAlmostColor">#C9B458</Color>
+            <Color x:Key="PastelKeyWrongColor">#3b3b3b</Color>
+
+            <!--Synth-wave Palette-->
+            <Color x:Key="SynthWaveBackgroundColor">#1B1B3A</Color>
+            <Color x:Key="SynthWaveKeyBackgroundColor">#6D9DC5</Color>
+            <Color x:Key="SynthWaveKeyCorrectColor">#6AAA64</Color>
+            <Color x:Key="SynthWaveKeyAlmostColou">#C9B458</Color>
+            <Color x:Key="SynthWaveKeyWrongColor">#3b3b3b</Color>
+
+            <!--Letter Box Style-->
+            <Style x:Key="LetterBoxStyle" TargetType="Label">
+                <Setter Property="WidthRequest" Value="50" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource BoxBackgroundColour}" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontSize" Value="19" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

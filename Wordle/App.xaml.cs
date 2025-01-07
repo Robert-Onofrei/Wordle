@@ -8,8 +8,7 @@ namespace Wordle
         {
             InitializeComponent();
 
-            // Set the starting page of the app to MainPage
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
     }
 }

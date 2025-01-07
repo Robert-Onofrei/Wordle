@@ -3,6 +3,7 @@
     x:Class="Wordle.SettingsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Wordle"
     Title="Settings">
 
     <VerticalStackLayout Padding="20" Spacing="15" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
@@ -13,47 +14,56 @@
             VerticalOptions="Center"
             FontAttributes="Bold" />
 
-        <!--Color Palette-->
+        <!--Color Palette Picker-->
         <Picker
             x:Name="ColorPalettePicker"
-            Title="Colour Palette">
+            Title="Color Palette"
+            SelectedItem="{Binding ColourPalette}"
+            HorizontalOptions="FillAndExpand">
             <Picker.ItemsSource>
                 <x:Array Type="{x:Type x:String}">
                     <x:String>Default</x:String>
                     <x:String>Pastel</x:String>
-                    <x:String>Warm</x:String>
+                    <x:String>Synth-wave</x:String>
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
 
-        <!--On Screen Keyboard-->
+        <!--On-Screen Keyboard Toggle-->
         <HorizontalStackLayout>
             <Label 
                 Text="On-Screen Keyboard"
                 VerticalOptions="Center"/>
             <Switch 
-                x:Name="OnScreenKeyboardSwitch"/>
+                IsToggled="{Binding ScreenKeyboard}" />
         </HorizontalStackLayout>
 
-        <!--Hard Mode toggle-->
+        <!--Hard Mode Toggle-->
         <HorizontalStackLayout>
             <Label 
                 Text="Hard Mode"
                 VerticalOptions="Center"/>
             <Switch 
-                x:Name="HardModeSwitch"/>
+                IsToggled="{Binding IsHardModeOn}" />
         </HorizontalStackLayout>
 
-        <!--Font Size-->
+        <!--Font Size Slider-->
         <Label 
             Text="Font Size"
             FontAttributes="Bold"/>
         <Slider
-            x:Name="FontSizeSlider"/>
+            Minimum="12"
+            Maximum="30"
+            Value="{Binding FontSize}"
+            HorizontalOptions="FillAndExpand"/>
+        <Label 
+            Text="{Binding FontSize, StringFormat='Font Size: {0:F0}'}"
+            HorizontalOptions="Center"/>
 
+        <!--Back Button-->
         <Button 
             Text="Back"
-            Clicked="OnBack_Clicked"
+            Clicked="OnBackClicked"
             HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>
