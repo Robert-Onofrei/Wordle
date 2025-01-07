@@ -12,7 +12,8 @@ namespace Wordle
         private int curCol = 0;
         private bool gameOver = false;
         private bool isHardModeOn = false;
-        private string secretWord = "MAUIX";
+        private string secretWord;
+        private readonly Random _random = new Random();
 
         //Defines colour palette pairs
         private Dictionary<string, PaletteColours> palettePairs = new Dictionary<string, PaletteColours>
@@ -73,6 +74,40 @@ namespace Wordle
             //Default settings
             ApplySettings();
         }
+
+        private void GetWord(List<string> wordList)
+        {
+            if (wordList == null || wordList.Count == 0)
+                throw new InvalidOperationException("Word list is empty or not initialized.");
+
+            //Generates a random index within the bounds of the word list
+            int randomIndex = _random.Next(wordList.Count);
+
+            //Assigns the randomly selected word to secretWord
+            secretWord = wordList[randomIndex].ToUpper();
+        }
+
+
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            // Initialize the WordAPI to fetch and load words
+            await WordAPI.InitializeAsync();
+            List<string> wordList = WordAPI.GetWords();
+
+            if (wordList != null && wordList.Count > 0)
+            {
+                GetWord(wordList);
+            }
+            else
+            {
+                //Handles if word list fails
+                await DisplayAlert("Error", "Failed to load words. Please try again later.", "OK");
+            }
+        }
+
 
         private void AppSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -346,7 +381,21 @@ namespace Wordle
                     var colors = palettePairs[palette];
                     letterBoxes[row, col].BackgroundColor = Color.FromHex(colors.KeyBackgroundColor);
                 }
+
+            //Select a new secret word for the new game
+            List<string> wordList = WordAPI.GetWords();
+            if (wordList != null && wordList.Count > 0)
+            {
+                GetWord(wordList);
+            }
+            else
+            {
+                //Handle the scenario where the word list is empty or failed to load
+                DisplayAlert("Error", "Word list is empty. Cannot start a new game.", "OK");
+                gameOver = true;
+            }
         }
+
 
         //Prompts to start a new game
         private async void PromptNewGame()
