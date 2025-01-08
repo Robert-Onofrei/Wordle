@@ -32,7 +32,7 @@
         <!--On-Screen Keyboard Toggle-->
         <HorizontalStackLayout>
             <Label 
-                Text="On-Screen Keyboard"
+                Text="On-Screen Keyboard "
                 VerticalOptions="Center"/>
             <Switch 
                 IsToggled="{Binding ScreenKeyboard}" />
@@ -41,7 +41,7 @@
         <!--Hard Mode Toggle-->
         <HorizontalStackLayout>
             <Label 
-                Text="Hard Mode"
+                Text="Hard Mode "
                 VerticalOptions="Center"/>
             <Switch 
                 IsToggled="{Binding IsHardModeOn}" />

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
+using Microsoft.Maui.Storage;
 
 namespace Wordle
 {
@@ -93,7 +94,13 @@ namespace Wordle
         {
             base.OnAppearing();
 
-            // Initialize the WordAPI to fetch and load words
+            if (!Preferences.Get("HasOpenedTutorial", false))
+            {
+                Preferences.Set("HasOpenedTutorial", true);
+                await Navigation.PushModalAsync(new TutorialPage());
+            }
+
+            //Initialize the WordAPI to fetch and load words
             await WordAPI.InitializeAsync();
             List<string> wordList = WordAPI.GetWords();
 
@@ -409,6 +416,10 @@ namespace Wordle
             {
                 gameOver = true;
             }
+        }
+        private async void OpenTutorial(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new TutorialPage());
         }
     }
 

@@ -6,22 +6,36 @@
     xmlns:local="clr-namespace:Wordle"
     Title="Wordle Demo"
     BackgroundColor="{DynamicResource DefaultBackgroundColor}">
-
+    
     <VerticalStackLayout Padding="20" Spacing="10">
         <!--Title-->
         <Label 
-            Text="WORDLE DEMO"
+            Text="WORDLE"
             HorizontalOptions="Center"
             TextColor="White"
             FontSize="Title"
             FontAttributes="Bold"
-            Margin="0, 20, 0, 20" />
+            Margin="0, 20, 0, 20"/>
 
-        <!--Setting Button-->
-        <Button
-            Text="Open Settings"
-            HorizontalOptions="Center"
-            Clicked="OpenSettings" />
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+            <!--Tutorial Button-->
+            <ImageButton
+                Source="info_symbol.png"
+                Background="Transparent"
+                HeightRequest="50"
+                WidthRequest="50"
+                TranslationX="350"
+                Clicked="OpenTutorial" />
+
+                <!--Settings Button-->
+            <ImageButton
+                Source="cogwheel.png"
+                Background="Transparent"
+                HeightRequest="45"
+                WidthRequest="45"
+                TranslationX="350"
+                Clicked="OpenSettings" />
+        </HorizontalStackLayout>
 
         <!--Grid of Letter Boxes-->
         <Grid
@@ -137,40 +151,40 @@
         <VerticalStackLayout x:Name="KeyboardLayout" Spacing="5" HorizontalOptions="Center" Margin="0,20,0,0">
             <!--Keyboard-->
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="3">
-                <Button Text="Q" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="W" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="E" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="R" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="T" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="Y" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="U" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="I" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="O" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="P" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="Q" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="W" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="E" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="R" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="T" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="Y" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="U" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="I" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="O" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="P" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="3">
-                <Button Text="A" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="S" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="D" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="F" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="G" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="H" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="J" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="K" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="L" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="A" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="S" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="D" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="F" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="G" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="H" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="J" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="K" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="L" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="3">
-                <Button Text="ENTER" Clicked="OnEnterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="16" FontAttributes="Bold" WidthRequest="65" HeightRequest="57"/>
-                <Button Text="Z" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="X" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="C" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="V" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="B" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="N" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="M" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="{Binding FontSize}" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="⌫" Clicked="OnBackspaceClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="16" FontAttributes="Bold" WidthRequest="65" HeightRequest="57"/>
+                <Button Text="ENTER" Clicked="OnEnterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="13" FontAttributes="Bold" WidthRequest="65" HeightRequest="57"/>
+                <Button Text="Z" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="X" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="C" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="V" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="B" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="N" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="M" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
+                <Button Text="⌫" Clicked="OnBackspaceClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="14" FontAttributes="Bold" WidthRequest="65" HeightRequest="57"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
 

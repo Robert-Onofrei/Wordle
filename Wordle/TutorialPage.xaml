@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Wordle.TutorialPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Tutorial">
+
+    <VerticalStackLayout Padding="20" Spacing="20">
+        <!--Tutorial Message-->
+        <Label 
+            Text="Welcome to the Wordle Tutorial!"
+            FontSize="24"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+        <Button 
+            Text="Close Tutorial" 
+            Clicked="CloseTutorialClicked" 
+            HorizontalOptions="Center" />
+
+        <Label
+            Text="How To Play"
+            FontSize="20"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TranslationX="-62"/>
+        
+        <Label 
+            Text="Guess the Word in 6 attempts."
+            FontSize="18"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TranslationY="-20"/>
+        
+        <Label 
+            Text="• Each guess must be a valid 5-letter word."
+            FontSize="15"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TranslationY="-22"
+            TranslationX="18"/>
+        
+        <Label 
+            Text="• The colour of the tiles will change to show how close your&#10;  guess was to the word."
+            FontSize="15"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TranslationY="-40"
+            TranslationX="73"/>
+        
+        <Label
+            Text="Examples"
+            FontSize="15"
+            FontAttributes="Bold"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TranslationX="-84"
+            TranslationY="-40"/>
+        
+        <Image
+            Source="green_guess.png"
+            HeightRequest="200"
+            WidthRequest="275"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TranslationY="-130"
+            TranslationX="19"/>
+        
+        <Label
+            Text="Green signifes correct letter in right place."
+            FontSize="15"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TranslationX="19"
+            TranslationY="-220"/>
+        
+        <Image
+            Source="yellow_guess.png"
+            HeightRequest="200"
+            WidthRequest="285"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TranslationY="-299"
+            TranslationX="18"/>
+        
+        <Label
+            Text="Yellow signifes correct letter in wrong place."
+            FontSize="15"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TranslationX="24"
+            TranslationY="-388"/>
+        
+        <Image
+            Source="correct_guess.png"
+            HeightRequest="200"
+            WidthRequest="275"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TranslationY="-470"
+            TranslationX="18"/>
+        
+        <Label
+            Text="ALL GREEN MEANS GUESSED WORD!!!!!!!!"
+            FontSize="15"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            TranslationX="20"
+            TranslationY="-560"/>
+        
+    </VerticalStackLayout>
+</ContentPage>
