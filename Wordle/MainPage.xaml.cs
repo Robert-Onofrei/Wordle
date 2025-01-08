@@ -8,6 +8,7 @@ namespace Wordle
     public partial class MainPage : ContentPage
     {
         //Variables
+        private DateTime startTime;
         private Label[,] letterBoxes = new Label[6, 5];
         private int curRow = 0;
         private int curCol = 0;
@@ -63,6 +64,8 @@ namespace Wordle
         public MainPage()
         {
             InitializeComponent();
+
+            startTime = DateTime.Now;
 
             //Creates letter box array 
             for (int row = 0; row < 6; row++)
@@ -342,7 +345,7 @@ namespace Wordle
         }
 
         //When enter is clicked
-        private void OnEnterClicked(object sender, EventArgs e)
+        private async void OnEnterClicked(object sender, EventArgs e)
         {
             if (gameOver) return;
 
@@ -422,6 +425,16 @@ namespace Wordle
 
                 //Prompts to start a new game
                 PromptNewGame();
+            }
+            if (guess == secretWord)
+            {
+                double puzzleDuration = (DateTime.Now - startTime).TotalSeconds;
+                await HistoryPage.RecordAttemptAsync(secretWord, (curRow + 1), puzzleDuration);
+            }
+            else if (curRow == 6)
+            {
+                double puzzleDuration = (DateTime.Now - startTime).TotalSeconds;
+                await HistoryPage.RecordAttemptAsync(secretWord, 6, puzzleDuration);    
             }
         }
 
@@ -562,6 +575,10 @@ namespace Wordle
         private async void OpenTutorial(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new TutorialPage());
+        }
+        private async void OpenHistory(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new HistoryPage());
         }
     }
 

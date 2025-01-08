@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Wordle.HistoryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="History">
+
+    <VerticalStackLayout Padding="20" Spacing="15" HorizontalOptions="Center" VerticalOptions="Center">
+        <!--Player Name-->
+        <Label
+            x:Name="PlayerNameLabel"
+            FontSize="24"
+            FontAttributes="Bold"
+            HorizontalOptions="Center" 
+            Margin="10"/>
+
+        <!--Heading row-->
+        <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+            <Label Text="Time (sec)" FontAttributes="Bold" />
+            <Label TranslationX="-7" Text="Guesses" FontAttributes="Bold" />
+            <Label Text="Word" FontAttributes="Bold" />
+        </HorizontalStackLayout>
+
+        <!--History of attempts-->
+        <CollectionView x:Name="AttemptsView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+                        <!--Time taken in seconds-->
+                        <Label TranslationX="-20" Text="{Binding TimeTaken, StringFormat='{0:F2}'}"/>
+                        <!--Number of guesses-->
+                        <Label TranslationX="8" Text="{Binding NumberOfGuesses}" />
+                        <!--Correct guess-->
+                        <Label TranslationX="41" Text="{Binding CorrectWord}" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!--Close Button-->
+        <Button
+            Text="Close"
+            HorizontalOptions="Center"
+            Clicked="CloseHistoryPage" />
+    </VerticalStackLayout>
+</ContentPage>

@@ -31,10 +31,18 @@
             <ImageButton
                 Source="cogwheel.png"
                 Background="Transparent"
-                HeightRequest="45"
-                WidthRequest="45"
+                HeightRequest="50"
+                WidthRequest="50"
                 TranslationX="350"
                 Clicked="OpenSettings" />
+
+            <ImageButton
+                Source="history.png"
+                Background="Transparent"
+                HeightRequest="50"
+                WidthRequest="50"
+                TranslationX="170"
+                Clicked="OpenHistory"/>
         </HorizontalStackLayout>
 
         <!--Grid of Letter Boxes-->
@@ -150,11 +158,10 @@
         <Button
             Text="New Game"
             HorizontalOptions="Center"
-            Margin="0,10,0,10"
             Clicked="OnNewGameClicked" />
 
         <!--Screen Keyboard -->
-        <VerticalStackLayout x:Name="KeyboardLayout" Spacing="5" HorizontalOptions="Center" Margin="0,20,0,0">
+        <VerticalStackLayout x:Name="KeyboardLayout" Spacing="5" HorizontalOptions="Center">
             <!--Keyboard-->
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="3">
                 <Button Text="Q" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
