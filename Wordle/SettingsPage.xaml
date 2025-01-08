@@ -49,8 +49,7 @@
 
         <!--Font Size Slider-->
         <Label 
-            Text="Font Size"
-            FontAttributes="Bold"/>
+            Text="Font Size"/>
         <Slider
             Minimum="12"
             Maximum="30"

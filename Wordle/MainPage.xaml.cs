@@ -26,7 +26,7 @@ namespace Wordle
                     BackgroundColor = "#121212",
                     KeyBackgroundColor = "#787C7E",
                     KeyCorrectColor = "#6AAA64",
-                    KeyAlmostColor = "#C9B458", 
+                    KeyAlmostColor = "#C9B458",
                     KeyWrongColor = "#3b3b3b"
                 }
             },
@@ -88,11 +88,22 @@ namespace Wordle
             secretWord = wordList[randomIndex].ToUpper();
         }
 
-
+        //Indicates if WordAPI has already been initialized
+        private bool _hasInitialized = false;
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
+            //Only initialize WordAPI once
+            if (!_hasInitialized)
+            {
+                await WordAPI.InitializeAsync();
+                _hasInitialized = true;
+            }
+
+            //Commenting out the second initialization to avoid re-initializing on each return
+            //await WordAPI.InitializeAsync(); //Removed to prevent multiple inits
 
             if (!Preferences.Get("HasOpenedTutorial", false))
             {
@@ -100,21 +111,120 @@ namespace Wordle
                 await Navigation.PushModalAsync(new TutorialPage());
             }
 
-            //Initialize the WordAPI to fetch and load words
-            await WordAPI.InitializeAsync();
-            List<string> wordList = WordAPI.GetWords();
+            //Retrieves the saved secret word if it exists
+            string savedSecretWord = Preferences.Get("SavedSecretWord", string.Empty);
 
-            if (wordList != null && wordList.Count > 0)
+            if (!string.IsNullOrEmpty(savedSecretWord))
             {
-                GetWord(wordList);
+                //Gets the saved secret word
+                secretWord = savedSecretWord;
+
+                //gets the saved current row and column
+                curRow = Preferences.Get("SavedCurRow", 0);
+                curCol = Preferences.Get("SavedCurCol", 0);
+
+                //gets the saved game state
+                gameOver = Preferences.Get("SavedGameOver", false);
+                isHardModeOn = Preferences.Get("SavedHardMode", false);
+
+                //Recreates the letter boxes
+                for (int row = 0; row < 6; row++)
+                {
+                    string rowString = Preferences.Get($"SavedRow{row}", "_____");
+
+                    for (int col = 0; col < 5; col++)
+                    {
+                        char letterChar = rowString[col];
+                        if (letterChar == '_')
+                            letterBoxes[row, col].Text = "";
+                        else
+                            letterBoxes[row, col].Text = letterChar.ToString();
+                    }
+                }
+
+                //Re-applies colors only on fully guessed rows
+                ReApplyColorsUpToCurrentRow();
             }
             else
             {
-                //Handles if word list fails
-                await DisplayAlert("Error", "Failed to load words. Please try again later.", "OK");
+                //If there's NO saved puzzle, ensure we have a secretWord
+                List<string> wordList = WordAPI.GetWords();
+                if (wordList != null && wordList.Count > 0)
+                {
+                    GetWord(wordList);
+                }
+                else
+                {
+                    //Word list failed to load
+                    await DisplayAlert("Error", "Failed to load words. Please try again later.", "OK");
+                }
             }
         }
 
+        private void ReApplyColorsUpToCurrentRow()
+        {
+            for (int row = 0; row < curRow; row++)
+            {
+                //Only color if the row is fully typed
+                bool rowIsFull = true;
+                string rowGuess = "";
+
+                for (int col = 0; col < 5; col++)
+                {
+                    string letter = letterBoxes[row, col].Text;
+                    if (string.IsNullOrEmpty(letter))
+                    {
+                        //If we find an empty letter, skip re-color
+                        rowIsFull = false;
+                        break;
+                    }
+                    rowGuess += letter;
+                }
+
+                if (rowIsFull)
+                {
+                    //Temporarily override curRow to re-color that row
+                    int originalCurRow = curRow;
+                    curRow = row;
+                    ColorBoxes(rowGuess.ToUpper());
+                    curRow = originalCurRow;
+                }
+            }
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            //Saves the secret word
+            Preferences.Set("SavedSecretWord", secretWord);
+
+            //Saves current row/col
+            Preferences.Set("SavedCurRow", curRow);
+            Preferences.Set("SavedCurCol", curCol);
+
+            //Saves gameOver + isHardModeOn
+            Preferences.Set("SavedGameOver", gameOver);
+            Preferences.Set("SavedHardMode", isHardModeOn);
+
+            //Save the letters on the board
+            //For each row we build a 5-letter string.
+            for (int row = 0; row < 6; row++)
+            {
+                string rowString = "";
+                for (int col = 0; col < 5; col++)
+                {
+                    string letter = letterBoxes[row, col].Text;
+                    if (string.IsNullOrEmpty(letter))
+                    {
+                        letter = "_";
+                    }
+
+                    rowString += letter;
+                }
+                Preferences.Set($"SavedRow{row}", rowString);
+            }
+        }
 
         private void AppSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -154,6 +264,13 @@ namespace Wordle
                 }
             }
         }
+
+        private void OnNewGameClicked(object sender, EventArgs e)
+        {
+            //When new game is clicked
+            StartNewGame();
+        }
+
 
         //Turns the keyboard on or off 
         public void ChangeKeyboardVisiblity(bool isVisible)
@@ -195,7 +312,13 @@ namespace Wordle
             //Only adds letter if empty
             if (curCol < 5)
             {
-                letterBoxes[curRow, curCol].Text = button.Text.ToUpper();
+                var label = letterBoxes[curRow, curCol];
+
+                label.Opacity = 0;
+                label.Text = button.Text.ToUpper();
+
+                label.FadeTo(1, 250);
+
                 curCol++;
             }
         }
@@ -235,6 +358,16 @@ namespace Wordle
             for (int c = 0; c < 5; c++)
             {
                 guess += letterBoxes[curRow, c].Text;
+            }
+
+            //Ensures cosistency
+            guess = guess.ToUpper();
+
+            //Checks if the guess is in the word list
+            if (!WordAPI.GetWords().Contains(guess))
+            {
+                Message.Text = "That's not in the word list!";
+                return;
             }
 
             //Checks constraints if hard mode is on
@@ -317,6 +450,9 @@ namespace Wordle
                     letterBoxes[curRow, i].BackgroundColor = Color.FromHex(colors.KeyCorrectColor);
                     letterCounts[guessChar]--;
 
+                    letterBoxes[curRow, i].Opacity = 0;
+                    letterBoxes[curRow, i].FadeTo(1, 300);
+
                     //Updates constraints
                     if (isHardModeOn)
                     {
@@ -346,10 +482,16 @@ namespace Wordle
                     {
                         reqLetters.Add(guessChar);
                     }
+
+                    letterBoxes[curRow, i].Opacity = 0;
+                    letterBoxes[curRow, i].FadeTo(1, 300);
                 }
                 else
                 {
                     letterBoxes[curRow, i].BackgroundColor = Color.FromHex(colors.KeyWrongColor);
+
+                    letterBoxes[curRow, i].Opacity = 0;
+                    letterBoxes[curRow, i].FadeTo(1, 300);
                 }
             }
         }
@@ -403,7 +545,6 @@ namespace Wordle
             }
         }
 
-
         //Prompts to start a new game
         private async void PromptNewGame()
         {
@@ -417,6 +558,7 @@ namespace Wordle
                 gameOver = true;
             }
         }
+
         private async void OpenTutorial(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new TutorialPage());

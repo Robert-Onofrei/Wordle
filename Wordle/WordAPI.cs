@@ -40,8 +40,11 @@ namespace Wordle
                     throw new InvalidOperationException("Invalid file path: Unable to determine directory.");
                 }
 
-                var lines = txt.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-                await File.WriteAllLinesAsync(fileName, lines);
+                var lines = txt
+                    .Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(line => line.Trim().ToUpper())
+                    .ToList();
+
 
                 words = lines.ToList();
             }

@@ -147,6 +147,12 @@
             </Frame>
         </Grid>
 
+        <Button
+            Text="New Game"
+            HorizontalOptions="Center"
+            Margin="0,10,0,10"
+            Clicked="OnNewGameClicked" />
+
         <!--Screen Keyboard -->
         <VerticalStackLayout x:Name="KeyboardLayout" Spacing="5" HorizontalOptions="Center" Margin="0,20,0,0">
             <!--Keyboard-->
