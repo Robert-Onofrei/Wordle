@@ -43,12 +43,12 @@
             TranslationX="18"/>
         
         <Label 
-            Text="• The colour of the tiles will change to show how close your&#10;  guess was to the word."
+            Text="• The colour of the tiles will change to show how&#10;  close your guess was to the word."
             FontSize="15"
             HorizontalOptions="Center"
             VerticalOptions="Center"
             TranslationY="-40"
-            TranslationX="73"/>
+            TranslationX="34"/>
         
         <Label
             Text="Examples"

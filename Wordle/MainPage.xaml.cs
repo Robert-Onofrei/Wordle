@@ -61,6 +61,9 @@ namespace Wordle
         //Tracks letters that must be in the guess, eg: Yellow letters
         private HashSet<char> reqLetters = new HashSet<char>();
 
+        //Tracks letters that are incorrect
+        private HashSet<char> incorrectLetters = new HashSet<char>();
+
         public MainPage()
         {
             InitializeComponent();
@@ -104,9 +107,6 @@ namespace Wordle
                 await WordAPI.InitializeAsync();
                 _hasInitialized = true;
             }
-
-            //Commenting out the second initialization to avoid re-initializing on each return
-            //await WordAPI.InitializeAsync(); //Removed to prevent multiple inits
 
             if (!Preferences.Get("HasOpenedTutorial", false))
             {
@@ -363,7 +363,7 @@ namespace Wordle
                 guess += letterBoxes[curRow, c].Text;
             }
 
-            //Ensures cosistency
+            //Ensures consistency
             guess = guess.ToUpper();
 
             //Checks if the guess is in the word list
@@ -394,6 +394,16 @@ namespace Wordle
                     if (!guess.Contains(requiredChar.ToString(), StringComparison.OrdinalIgnoreCase))
                     {
                         Message.Text = $"Guess must contain the letter '{requiredChar}'.";
+                        return;
+                    }
+                }
+
+                //Ensures no incorrect letters are used
+                foreach (char ch in guess)
+                {
+                    if (incorrectLetters.Contains(ch))
+                    {
+                        Message.Text = $"Guess cannot contain the letter '{ch}'.";
                         return;
                     }
                 }
@@ -434,9 +444,56 @@ namespace Wordle
             else if (curRow == 6)
             {
                 double puzzleDuration = (DateTime.Now - startTime).TotalSeconds;
-                await HistoryPage.RecordAttemptAsync(secretWord, 6, puzzleDuration);    
+                await HistoryPage.RecordAttemptAsync(secretWord, 6, puzzleDuration);
             }
         }
+
+        //Darkens the keyboard button for the specified incorrect letter
+        private void DarkenIncorrectLetter(char letter)
+        {
+            foreach (var layout in KeyboardLayout.Children)
+            {
+                if (layout is HorizontalStackLayout horizontalLayout)
+                {
+                    foreach (var child in horizontalLayout.Children)
+                    {
+                        if (child is Button button && button.Text.ToUpper() == letter.ToString().ToUpper())
+                        {
+                            //Only updates if the letter hasn't been marked yet
+                            if (!button.BackgroundColor.Equals(Color.FromHex("#6AAA64")) && !button.BackgroundColor.Equals(Color.FromHex("#C9B458")))
+                            {
+                                button.BackgroundColor = (Color)Application.Current.Resources["KeyWrongColor"];
+                                incorrectLetters.Add(char.ToUpper(letter));
+
+                                //Disables the button
+                                button.IsEnabled = false;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        private void ResetKeyboardColors()
+        {
+            foreach (var layout in KeyboardLayout.Children)
+            {
+                if (layout is HorizontalStackLayout horizontalLayout)
+                {
+                    foreach (var child in horizontalLayout.Children)
+                    {
+                        if (child is Button button)
+                        {
+                            button.BackgroundColor = (Color)Application.Current.Resources["DefaultKeyBackgroundColor"];
+                            //Re-enables the button 
+                            button.IsEnabled = true;
+                        }
+                    }
+                }
+            }
+        }
+
+
 
         //Colours the boxes based on the guess
         private void ColorBoxes(string guess)
@@ -505,6 +562,7 @@ namespace Wordle
 
                     letterBoxes[curRow, i].Opacity = 0;
                     letterBoxes[curRow, i].FadeTo(1, 300);
+                    DarkenIncorrectLetter(guessChar);
                 }
             }
         }
@@ -543,6 +601,9 @@ namespace Wordle
                     var colors = palettePairs[palette];
                     letterBoxes[row, col].BackgroundColor = Color.FromHex(colors.KeyBackgroundColor);
                 }
+
+            incorrectLetters.Clear();
+            ResetKeyboardColors();
 
             //Select a new secret word for the new game
             List<string> wordList = WordAPI.GetWords();

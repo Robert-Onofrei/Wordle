@@ -6,209 +6,229 @@
     xmlns:local="clr-namespace:Wordle"
     Title="Wordle Demo"
     BackgroundColor="{DynamicResource DefaultBackgroundColor}">
-    
-    <VerticalStackLayout Padding="20" Spacing="10">
-        <!--Title-->
-        <Label 
-            Text="WORDLE"
-            HorizontalOptions="Center"
-            TextColor="White"
-            FontSize="Title"
-            FontAttributes="Bold"
-            Margin="0, 20, 0, 20"/>
 
-        <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-            <!--Tutorial Button-->
-            <ImageButton
-                Source="info_symbol.png"
-                Background="Transparent"
-                HeightRequest="50"
-                WidthRequest="50"
-                TranslationX="350"
-                Clicked="OpenTutorial" />
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
+            <!--Title-->
+            <Label 
+                Text="WORDLE"
+                HorizontalOptions="Center"
+                TextColor="White"
+                FontSize="Title"
+                FontAttributes="Bold"
+                Margin="0, 20, 0, 20"/>
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="15">
+                <!--Tutorial Button-->
+                <ImageButton
+                    Source="info_symbol.png"
+                    Background="Transparent"
+                    HeightRequest="50"
+                    WidthRequest="50"
+                    Clicked="OpenTutorial" />
 
                 <!--Settings Button-->
-            <ImageButton
-                Source="cogwheel.png"
-                Background="Transparent"
-                HeightRequest="50"
-                WidthRequest="50"
-                TranslationX="350"
-                Clicked="OpenSettings" />
+                <ImageButton
+                    Source="cogwheel.png"
+                    Background="Transparent"
+                    HeightRequest="50"
+                    WidthRequest="50"
+                    Clicked="OpenSettings" />
 
-            <ImageButton
-                Source="history.png"
-                Background="Transparent"
-                HeightRequest="50"
-                WidthRequest="50"
-                TranslationX="170"
-                Clicked="OpenHistory"/>
-        </HorizontalStackLayout>
+                <!--History Button-->
+                <ImageButton
+                    Source="history.png"
+                    Background="Transparent"
+                    HeightRequest="50"
+                    WidthRequest="50"
+                    Clicked="OpenHistory"/>
+            </HorizontalStackLayout>
 
-        <!--Grid of Letter Boxes-->
-        <Grid
-            x:Name="WordGrid"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"
-            Padding="5"
-            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
-            ColumnDefinitions="Auto,Auto,Auto,Auto,Auto"
-            RowSpacing="5"
-            ColumnSpacing="5">
-            
-            <!--All Letter Boxes-->
-            <!--Has a default style from App.xaml-->
+            <!--Grid of Letter Boxes-->
+            <Grid
+                x:Name="WordGrid"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Padding="5"
+                RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+                ColumnDefinitions="Auto,Auto,Auto,Auto,Auto"
+                RowSpacing="5"
+                ColumnSpacing="5">
+
+                <!--All Letter Boxes-->
+                <!--Has a default style from App.xaml-->
             <Frame Grid.Row="0" Grid.Column="0" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R0C0" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R0C0" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="0" Grid.Column="1" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R0C1" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R0C1" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="0" Grid.Column="2" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R0C2" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R0C2" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="0" Grid.Column="3" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R0C3" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R0C3" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="0" Grid.Column="4" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R0C4" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R0C4" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
 
             <Frame Grid.Row="1" Grid.Column="0" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R1C0" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R1C0" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="1" Grid.Column="1" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R1C1" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R1C1" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="1" Grid.Column="2" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R1C2" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R1C2" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="1" Grid.Column="3" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R1C3" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R1C3" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="1" Grid.Column="4" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R1C4" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R1C4" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
 
             <Frame Grid.Row="2" Grid.Column="0" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R2C0" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R2C0" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="2" Grid.Column="1" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R2C1" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R2C1" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="2" Grid.Column="2" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R2C2" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R2C2" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="2" Grid.Column="3" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R2C3" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R2C3" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="2" Grid.Column="4" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R2C4" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R2C4" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
 
             <Frame Grid.Row="3" Grid.Column="0" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R3C0" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R3C0" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="3" Grid.Column="1" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R3C1" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R3C1" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="3" Grid.Column="2" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R3C2" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R3C2" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="3" Grid.Column="3" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R3C3" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R3C3" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="3" Grid.Column="4" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R3C4" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R3C4" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
 
             <Frame Grid.Row="4" Grid.Column="0" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R4C0" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R4C0" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="4" Grid.Column="1" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R4C1" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R4C1" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="4" Grid.Column="2" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R4C2" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R4C2" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="4" Grid.Column="3" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R4C3" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R4C3" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="4" Grid.Column="4" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R4C4" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R4C4" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
 
             <Frame Grid.Row="5" Grid.Column="0" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R5C0" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R5C0" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="5" Grid.Column="1" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R5C1" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R5C1" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="5" Grid.Column="2" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R5C2" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R5C2" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="5" Grid.Column="3" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R5C3" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
+                    <Label x:Name="R5C3" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
             <Frame Grid.Row="5" Grid.Column="4" BorderColor="#3b3b3b" CornerRadius="2" Padding="0">
-                <Label x:Name="R5C4" Style="{StaticResource LetterBoxStyle}" />
-            </Frame>
-        </Grid>
+                    <Label x:Name="R5C4" Style="{StaticResource LetterBoxStyle}" />
+                </Frame>
+            </Grid>
 
-        <Button
-            Text="New Game"
-            HorizontalOptions="Center"
-            Clicked="OnNewGameClicked" />
+            <Button
+                Text="New Game"
+                BackgroundColor="grey"
+                HorizontalOptions="Center"
+                Clicked="OnNewGameClicked" />
 
-        <!--Screen Keyboard -->
-        <VerticalStackLayout x:Name="KeyboardLayout" Spacing="5" HorizontalOptions="Center">
-            <!--Keyboard-->
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="3">
-                <Button Text="Q" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="W" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="E" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="R" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="T" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="Y" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="U" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="I" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="O" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="P" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-            </HorizontalStackLayout>
+            <!--Screen Keyboard-->
+            <Grid x:Name="KeyboardLayout" Padding="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="3">
-                <Button Text="A" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="S" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="D" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="F" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="G" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="H" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="J" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="K" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="L" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-            </HorizontalStackLayout>
+                <!--Defined 10 columns with equal width-->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Spacing="3" Padding="3">
+                    <Button Text="Q" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="W" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="E" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="R" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="T" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="Y" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="U" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="I" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="O" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="P" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                </HorizontalStackLayout>
 
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="3">
-                <Button Text="ENTER" Clicked="OnEnterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="13" FontAttributes="Bold" WidthRequest="65" HeightRequest="57"/>
-                <Button Text="Z" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="X" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="C" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="V" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="B" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="N" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="M" Clicked="OnLetterClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="15" FontAttributes="Bold" WidthRequest="42" HeightRequest="57"/>
-                <Button Text="⌫" Clicked="OnBackspaceClicked" TextColor="White" BackgroundColor="{DynamicResource DefaultKeyBackgroundColor}" FontSize="14" FontAttributes="Bold" WidthRequest="65" HeightRequest="57"/>
-            </HorizontalStackLayout>
+                <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="10" Spacing="3" Padding="3">
+                    <Button Text="A" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="S" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="D" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="F" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="G" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="H" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="J" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="K" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="L" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout HorizontalOptions="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="10" Spacing="3" Padding="3">
+                    <Button Text="ENTER" Clicked="OnEnterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=50, Desktop=82}" HeightRequest="{OnIdiom Phone=45, Desktop=60}" Grid.ColumnSpan="2" />
+                    <Button Text="Z" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="X" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="C" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="V" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="B" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="N" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="M" Clicked="OnLetterClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=32, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}"/>
+                    <Button Text="⌫" Clicked="OnBackspaceClicked" Style="{StaticResource KeyButtonStyle}" FontSize="{OnIdiom Phone=12, Desktop=16}" WidthRequest="{OnIdiom Phone=40, Desktop=50}" HeightRequest="{OnIdiom Phone=45, Desktop=60}" Grid.ColumnSpan="2" />
+                </HorizontalStackLayout>
+            </Grid>
+
+
+            <!--Displays messages-->
+            <Label 
+                x:Name="Message"
+                Text=""
+                HorizontalOptions="Center"
+                TranslationY="-8"
+                FontSize="15"
+                FontAttributes="Bold"
+                TextColor="White"/>
         </VerticalStackLayout>
-
-        <!--Displays messages-->
-        <Label 
-            x:Name="Message"
-            Text=""
-            HorizontalOptions="Center"
-            FontSize="Medium"
-            FontAttributes="Bold"
-            Margin="0,20,0,0"
-            TextColor="White"/>
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

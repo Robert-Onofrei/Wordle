@@ -45,7 +45,6 @@ namespace Wordle
                     .Select(line => line.Trim().ToUpper())
                     .ToList();
 
-
                 words = lines.ToList();
             }
             catch (Exception ex)

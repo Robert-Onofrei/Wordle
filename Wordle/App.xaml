@@ -15,22 +15,20 @@
             <Color x:Key="DefaultKeyBackgroundColor">#787C7E</Color>
             <Color x:Key="DefaultKeyCorrectColor">#6AAA64</Color>
             <Color x:Key="DefaultKeyAlmostColor">#C9B458</Color>
-            <Color x:Key="DefaultKeyWrongColor">#3b3b3b</Color>
 
             <!--Pastel Palette-->
             <Color x:Key="PastelBackgroundColor">#F7E1D7</Color>
             <Color x:Key="PastelKeyBackgroundColor">#C9CBA3</Color>
             <Color x:Key="PastelKeyCorrectColor">#6AAA64</Color>
             <Color x:Key="PastelKeyAlmostColor">#C9B458</Color>
-            <Color x:Key="PastelKeyWrongColor">#3b3b3b</Color>
 
             <!--Synth-wave Palette-->
             <Color x:Key="SynthWaveBackgroundColor">#1B1B3A</Color>
             <Color x:Key="SynthWaveKeyBackgroundColor">#6D9DC5</Color>
             <Color x:Key="SynthWaveKeyCorrectColor">#6AAA64</Color>
             <Color x:Key="SynthWaveKeyAlmostColou">#C9B458</Color>
-            <Color x:Key="SynthWaveKeyWrongColor">#3b3b3b</Color>
 
+            <Color x:Key="KeyWrongColor">#3b3b3b</Color>
             <!--Letter Box Style-->
             <Style x:Key="LetterBoxStyle" TargetType="Label">
                 <Setter Property="WidthRequest" Value="50" />
@@ -41,6 +39,16 @@
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="HorizontalTextAlignment" Value="Center" />
                 <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+
+            <Style x:Key="KeyButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="{DynamicResource DefaultKeyBackgroundColor}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="15" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+                <Setter Property="Padding" Value="10,5" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

@@ -13,7 +13,7 @@ namespace Wordle
 
         //Variables
         private string colourPalette = "Default";
-        private bool screenKeyboard = false;
+        private bool screenKeyboard = true;
         private bool isHardModeOn = false;
         private double fontSize = 19;
 
